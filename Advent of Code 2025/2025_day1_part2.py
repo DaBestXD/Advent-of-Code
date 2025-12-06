@@ -1,11 +1,11 @@
 combo = []
-with open('dialcombos.txt', 'r') as file:
+with open('Advent of Code 2025/Puzzle_Inputs/2025_day1_puzzle_input.txt', 'r') as file:
   for line in file:
     combo.append(line.rstrip())
 sample_1 = ['L68','L30','R48','L5','R60','L55','L1','L99','R14','L82']
 pointer = 50 #starting value
 zeroCounter = 0
-for i in sample_1:
+for i in combo:
   direction = -1 if i[0] == 'L' else 1
   stepAmount = int(i[1:]) 
   absMove = pointer + stepAmount
