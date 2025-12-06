@@ -1,4 +1,4 @@
-with open('2025_day2.txt','r') as f:
+with open('Advent of Code 2025/Puzzle_Inputs/2025_day2_puzzle_input.txt','r') as f:
   puzzle_id_ranges = ((f.read().replace('-',' '))).strip()
   puzzle_id_ranges = puzzle_id_ranges.split(',')
   id_ranges = []
