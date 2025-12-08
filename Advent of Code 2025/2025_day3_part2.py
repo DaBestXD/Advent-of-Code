@@ -19,8 +19,8 @@ for bat_row in bat_list:
         test = bat_row[idx]
     digits.append(str(test))
     bat_row = bat_row[starting_idx+1:]
-
-  test_sum += int(''.join(digits))
+    #TODO change from creating copy to slicing og list
+  sum += int(''.join(digits))
 
 print(sum) 
 
