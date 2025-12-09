@@ -10,7 +10,6 @@ total = 0
 tower_edge = len(paper_tower[0])
 tower_bottom = len(paper_tower.keys())
 coordinates = []
-foo = []
 def edge(column:int) -> slice:
     #left most edge
     if column == 0:
@@ -36,13 +35,10 @@ while True:
                         paper_counter += 1
                 #only check above if not at the top
                 if row > 0:
-                    #print([x for x in paper_tower[row - 1][column_slice]])
                     paper_counter += sum(x == '@' for x in paper_tower[row - 1][column_slice])
                 #only check row below if not at the bottom
                 if row+1 < tower_bottom:
-                    #print([x for x in paper_tower[row + 1][column_slice]])
                     paper_counter += sum(x == '@' for x in paper_tower[row + 1][column_slice])
-                foo.append(paper_counter)
                 if paper_counter < 4:
                     coordinates.append([row, column])
                     temptotal +=1
