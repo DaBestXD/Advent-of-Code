@@ -20,8 +20,4 @@ for row in lines[1:-1]:
     print("".join(row), laser_positions, split_count)
 
 print(split_count)
-# init laser pos [7]
-# .....|^|^|.....
-# go through row . -> . -> . -> if idx in laser_positions set to "|"
-# and idx not = "^"
-# if laser is "^" then remove the current laser then append laser-1,laser+1
+# not efficient at all....
