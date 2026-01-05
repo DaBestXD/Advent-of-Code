@@ -13,12 +13,11 @@ def main():
         x = cord[0]
         y = cord[1]
         if idx + 1 < len(rectangle_corners):
-            for i in rectangle_corners:
-                if cord != i:
-                    x2 = i[0]
-                    y2 = i[1]
-                    area = (abs(x2 - x) + 1) * (abs(y2 - y) + 1)
-                    max = area if area > max else max
+            for i in rectangle_corners[idx + 1 :]:
+                x2 = i[0]
+                y2 = i[1]
+                area = (abs(x2 - x) + 1) * (abs(y2 - y) + 1)
+                max = area if area > max else max
     print(max)
 
 
