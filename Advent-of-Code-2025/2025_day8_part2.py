@@ -1,5 +1,4 @@
 import time
-import math
 
 start = time.time()
 with open("./puzzle_inputs/input.txt") as f:
@@ -7,7 +6,7 @@ with open("./puzzle_inputs/input.txt") as f:
 
 
 def get_distance(crd_one: tuple, crd_two: tuple) -> float:
-    dis = math.sqrt(
+    dis = (
         pow(crd_one[0] - crd_two[0], 2)
         + pow(crd_one[1] - crd_two[1], 2)
         + pow(crd_one[2] - crd_two[2], 2)
@@ -28,6 +27,8 @@ def main():
     while junction_boxes:
         _, first_cord, second_cord = sorted_dis[idx]
         idx += 1
+        if len(junction_boxes) == 1:
+            break
         if first_cord in junction_boxes:
             del junction_boxes[first_cord]
         elif second_cord in junction_boxes:

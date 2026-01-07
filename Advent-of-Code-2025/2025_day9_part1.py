@@ -19,6 +19,7 @@ def main():
                 area = (abs(x2 - x) + 1) * (abs(y2 - y) + 1)
                 max = area if area > max else max
     print(max)
+    print(f"Took {(time.time() - start):.4f} seconds")
 
 
 if __name__ == "__main__":
