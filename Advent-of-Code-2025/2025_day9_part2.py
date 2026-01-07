@@ -45,8 +45,6 @@ def main():
     while area_heap:
         largest, pos, pos2 = heapq.heappop(area_heap)
         largest = -largest
-        if largest == 66:
-            print(largest, pos, pos2)
         valid_area = check_area(pos, pos2)
         local_max = largest if valid_area and largest > local_max else local_max
         if valid_area and local_max >= largest:
