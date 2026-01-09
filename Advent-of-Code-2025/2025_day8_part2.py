@@ -1,4 +1,5 @@
 import time
+import heapq
 
 start = time.time()
 with open("./puzzle_inputs/input.txt") as f:
@@ -7,33 +8,40 @@ with open("./puzzle_inputs/input.txt") as f:
 
 def get_distance(crd_one: tuple, crd_two: tuple) -> float:
     dis = (
-        pow(crd_one[0] - crd_two[0], 2)
-        + pow(crd_one[1] - crd_two[1], 2)
-        + pow(crd_one[2] - crd_two[2], 2)
+        (crd_one[0] - crd_two[0]) ** 2
+        + (crd_one[1] - crd_two[1]) ** 2
+        + (crd_one[2] - crd_two[2]) ** 2
     )
     return dis
 
 
 def main():
     sorted_dis = []
-    junction_boxes = {}
     for idx, coord in enumerate(coordinates):
-        junction_boxes[coord] = idx
         for compare in coordinates[idx + 1 :]:
             dis = get_distance(coord, compare)
-            sorted_dis.append((dis, coord, compare))
-    sorted_dis.sort()
-    idx = 0
-    while junction_boxes:
-        _, first_cord, second_cord = sorted_dis[idx]
-        idx += 1
-        if len(junction_boxes) == 1:
+            heapq.heappush(sorted_dis, (dis, {coord, compare}))
+    cir = []
+    _, c = heapq.heappop(sorted_dis)
+    cir.append(c)
+    while sorted_dis:
+        merge = False
+        _, c = heapq.heappop(sorted_dis)
+        for k in cir:
+            if c & k:
+                k |= c
+                merge = True
+        if not merge:
+            cir.append(c)
+        for idx, k in enumerate(cir):
+            for p in cir[idx + 1 :]:
+                if k & p:
+                    k |= p
+                    cir.remove(p)
+        if len(cir[0]) == len(coordinates):
+            c1, c2 = c
+            print(f"{c1[0] * c2[0]}")
             break
-        if first_cord in junction_boxes:
-            del junction_boxes[first_cord]
-        elif second_cord in junction_boxes:
-            del junction_boxes[second_cord]
-    print(first_cord[0] * second_cord[0], first_cord, second_cord, idx)
     print(f"Took {round(time.time() - start, 4)} seconds")
 
 
