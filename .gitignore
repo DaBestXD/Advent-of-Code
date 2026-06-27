@@ -1,2 +1,5 @@
+*DS_Store
 **/schizo_code
 **/Puzzle_Inputs
+*.env
+**/AoC25

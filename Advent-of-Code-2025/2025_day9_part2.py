@@ -19,20 +19,19 @@ with open("./puzzle_inputs/2025_day9_input.txt", "r") as f:
             heapq.heappush(horizontal_lines[y], x)
         else:
             horizontal_lines[y] = [x]
-        if idx + 1 < len(cords):
-            for x2, y2 in cords[idx + 1 :]:
-                if x2 == x or y2 == y:
-                    continue
-                area = (abs(x2 - x) + 1) * (abs(y2 - y) + 1)
-                heapq.heappush(area_heap, (-area, (x, y), (x2, y2)))
+        for x2, y2 in cords[idx + 1 :]:
+            area = (abs(x2 - x) + 1) * (abs(y2 - y) + 1)
+            heapq.heappush(area_heap, (-area, (x, y), (x2, y2)))
 
 
 def check_area(pos, pos2) -> bool:  # pos will always be the higher cord
-    x1, y1 = pos[0], pos[1]
-    x2, y2 = pos2[0], pos2[1]
+    x1, y1 = pos
+    x2, y2 = pos2
     xbox_range = (x1, x2) if x1 < x2 else (x2, x1)
     ybox_range = (y1, y2) if y1 < y2 else (y2, y1)
-    for k in horizontal_lines.keys():
+    h_line_keys = list(horizontal_lines.keys())
+    start_ptr = h_line_keys.index(ybox_range[0])
+    for k in h_line_keys[start_ptr:]:
         if k < ybox_range[1] and k > ybox_range[0]:
             line_start = heapq.nsmallest(1, horizontal_lines[k])[0]
             line_end = heapq.nlargest(1, horizontal_lines[k])[0]
@@ -42,7 +41,7 @@ def check_area(pos, pos2) -> bool:  # pos will always be the higher cord
                 return False
             elif line_start <= xbox_range[1] and line_end >= xbox_range[1]:
                 return False
-        if k == ybox_range[1]:
+        if k == ybox_range[1]:  # not needed for actual puzzle input just example
             bot_line_start = heapq.nsmallest(1, horizontal_lines[k])[0]
             bot_line_end = heapq.nlargest(1, horizontal_lines[k])[0]
             for x in vertical_lines.keys():
@@ -72,16 +71,12 @@ def check_area(pos, pos2) -> bool:  # pos will always be the higher cord
 
 
 def main():
-    local_max = 0
     while area_heap:
         largest, pos, pos2 = heapq.heappop(area_heap)
-        largest = -largest
-        valid_area = check_area(pos, pos2)
-        local_max = largest if valid_area and largest > local_max else local_max
-        if valid_area and local_max >= largest:
+        if check_area(pos, pos2):
             break
 
-    print(local_max, pos, pos2)
+    print(-largest, pos, pos2)
     print(f"Took {(time.time() - start):.4f} seconds")
 
 
